@@ -11,18 +11,19 @@ const App = () => {
     const Content = () => {
         return (
             <div>
-                {parts.map((parts, index) => (
-                    <p key={index}>Kurssin nimi {parts.name} , jossa tehtavia {parts.exercises} </p>
-                ))}
+                <p> Eka kurssi {parts[0].name} ja tehtavia {parts[0].exercises} </p>
+                <p> Toka kurssi {parts[1].name} ja tehtavia {parts[1].exercises} </p>
+                <p> Kolmas kurssi {parts[2].name} ja tehtavia {parts[2].exercises} </p>
+
             </div>
         )
     }
     const Total = () => {
         return (
             <div>
-                <p>Kurssien tehtavien summa on  {parts.reduce((total, currentValue) => total = total + currentValue.exercises, 0)} </p> 
+                <p>Kurssien tehtavien summa on  {parts[0].exercises + parts[1].exercises + parts[2].exercises} </p>
             </div>
-            )
+        )
     }
     const course = 'Half Stack application development'
     const parts = [
@@ -40,19 +41,17 @@ const App = () => {
         }
     ]
 
-    const sum = parts.reduce((total, currentValue) => total = total + currentValue.exercises, 0)
-    console.log(sum)
-    
+    console.log(parts[0].name, parts[1].name)
     return (
 
         <div>
             <Header coursename={course} />
             <Content parts={parts} />
             <Total parts={parts} />
-            
+
         </div>
     )
-   
+
 }
 
 export default App
