@@ -20,7 +20,7 @@ const History = (props) => {
             <p> Bad {props.bad1} </p>
             <p> All {props.all1} </p>
             <p> Average {props.average1} </p>
-            <p> Positive {props.positive1} </p>
+            <p> Positive {props.positive1} % </p>
 
         </div>
     )
