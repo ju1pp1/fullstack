@@ -13,17 +13,17 @@ const Statistics = (props) => {
     return (
         <div>
             button press history: {props.allClicks.join(' ')}
-            <br />
+            
             <StaticLine text1="Good" value1={props.good1} />
-            <br />
+            
             <StaticLine text2="Neutral" value2={props.neutral1} />
-            <br />
+            
             <StaticLine text3="Bad" value3={props.bad1} />
-            <br />
+            
             <StaticLine text4="All" value4={props.all1} />
-            <br />
+            
             <StaticLine text5="Average" value5={props.average1} />
-            <br />
+            
             <StaticLine text6="Positive" value6={props.positive1} />
 
             <h1> Statistics </h1>
