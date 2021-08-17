@@ -30,11 +30,11 @@ const App = () => {
             }
             const Part1 = () => {
 
-                var namesi = courses[0].parts
-                console.log(namesi)
+                //var namesi = courses[0].parts
+                //console.log(namesi)
 
-                var names = namesi.map((namess) => namess.name) 
-                    console.log(names)
+                //var names = namesi.map((namess) => namess.name) 
+                //    console.log(names)
 
                 //var part1 = namesi.map((nimett) => nimett.name)
                 //console.log(part1)
