@@ -34,6 +34,21 @@ const App = (props) => {
         ? persons
         : persons.filter(person => person.important === true)
 
+    /* 
+     <ul>
+                {persons.map(person =>
+                    <Note key={person.id} person={person} />
+                )}
+            </ul>
+            <form onSubmit={addPerson}>
+                 <input
+                    value={newName}
+                    onChange={handlePersonChange}
+                />
+                    <button type="submit">add</button>
+
+                    </form>
+     */
     return (        
         <div>
             <h2>Phonebook</h2>
@@ -46,20 +61,16 @@ const App = (props) => {
                     <Note key={person.id} person={person} />
                 )}
                 </ul>
-            </div>
-            <ul>
-                {persons.map(person =>
-                    <Note key={person.id} person={person} />
-                )}
-            </ul>
-            <form onSubmit={addPerson}>
-                 <input
-                    value={newName}
-                    onChange={handlePersonChange}
-                />
+                <form onSubmit={addPerson}>
+                    <input
+                        value={newName}
+                        onChange={handlePersonChange}
+                    />
                     <button type="submit">add</button>
-                    
-                    </form>
+
+                </form>
+            </div>
+            
             <h2>Numbers</h2>
                 
             </div>
