@@ -8,7 +8,7 @@ const App = () => { //props
     ]) //props.persons
     const [newName, setNewName] = useState('')
     const [showAll, setShowAll] = useState(true)
-    const [newNote, setNewNote] = useState('')
+    //const [newNote, setNewNote] = useState('')
     //Lisätään komponenttiin lomake uuden muistiinpanon lisäämistä varten
     //addPerson tapahtumankäsittelijä reagoi napin painallukseen
 
@@ -16,15 +16,15 @@ const App = () => { //props
         event.preventDefault()
 
         const personObject = {
-            content: newNote,
+            name: newName,
             date: new Date().toISOString(),
             important: Math.random() > 0.5,
             id: persons.length + 1,
-            name: newName
         }
         setPersons(persons.concat(personObject))
         setNewName('')
     }
+    /*
     const addNote = (event) => {
         event.preventDefault()
 
@@ -37,29 +37,30 @@ const App = () => { //props
         }
         setPersons(persons.concat(noteObject))
         setNewNote('')
-    }
+    } 
+    */
     // Tapahtumakäsittelijä, kutsutaan kun syötekomponentissa tapahtuu jotain
 
     const handlePersonChange = (event) => {
-        console.log(event.target.value)
+        //console.log(event.target.value)
         setNewName(event.target.value)
 
     }
-    const handleNoteChange = (event) => {
-        console.log(event.target.value)
+   /* const handleNoteChange = (event) => {
+        //console.log(event.target.value)
         setNewNote(event.target.value)
 
-    }
+    }*/
     // Näyttääkö kaikki vai vain tärkeät
 
     const personsToShow = showAll
         ? persons
         : persons.filter(person => person.important === true)
-
+        /*
     const notesToShow = showAll
         ? notes
         : notes.filter(note => note.important === true)
-
+        */
     /* tärkeä / kaikki - nappi
      <div>
                 <button onClick={() => setShowAll(!showAll)}>
@@ -90,7 +91,8 @@ const App = () => { //props
                     </form>
      */
     
-    
+    //var message = `${newName} is already added to phonebook`
+    //window.alert(message)
 
     console.log(persons)
     return (        
@@ -110,15 +112,7 @@ const App = () => { //props
             )}
             <h2>Numbers</h2>
             
-            <form onSubmit={addNote}>
-                Number:<input value={newNote}
-                    onChange={handleNoteChange} />
-                <br />
-                <button type="submit">save</button>
-            </form>
-            {notesToShow.map(notes =>
-                <Note key={notes.id} person={notes} />
-            )}
+            
             </div>
     )
 }
