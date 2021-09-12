@@ -50,7 +50,7 @@ const App = () => { //props
         setNewNumber('')
         setNewFilter('')
     }
-    
+
 
     /*
     const addNote = (event) => {
@@ -89,7 +89,7 @@ const App = () => { //props
 
     const personsToShow = showAll
         ? persons
-        : persons.filter(person => person.name.toLowerCase() === newFilter)
+        : persons.filter(person => person.name.toLowerCase().includes(newFilter.toLowerCase()))
 
     /*
 const notesToShow = showAll
@@ -129,15 +129,19 @@ const notesToShow = showAll
     return (
         <div>
             <h2>Phonebook</h2>
-
+            <button onClick={() => setShowAll(!showAll)}>
+                show {showAll ? 'important' : 'all'}
+            </button>
+            {personsToShow.map(person =>
+                <Note key={person.id} person={person} />
+            )}
+        
             <div>
-                <button onClick={() => setShowAll(!showAll)}>
-                    show {showAll ? 'filtered' : 'all'}
-                    </button>
+
                 Filter shown with: <input
                     value={newFilter}
                     onChange={handleFilterChange}
-                    
+
                 />
             </div>
             <h2>Add a new</h2>
