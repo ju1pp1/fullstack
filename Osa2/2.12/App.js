@@ -1,15 +1,26 @@
 import React, { useState, useEffect } from 'react'
 import Note from './components/Note'
+import Country from './components/Country'
+import Country2 from './components/Country2'
 import axios from 'axios'
 
 const App = () => { //props
     const [notes, setNotes] = useState([])
+    const [notesC, setNotesC] = useState([])
+
+    const [countries, setCountries] = useState([])
+    const [allData, setAllData] = useState([])
+    const [filteredData, setFilteredData] = useState(allData)
+
     const [persons, setPersons] = useState([
         { name: 'Jope Ruonansuu', number: '050 9663932' },
         { name: 'Juuso Nuoritalo', number: '050 9993932' },
         { name: 'Markku Keimonen', number: '050 9883932' },
         { name: 'Salla Saaristo', number: '050 9773932' },
     ]) //props.persons
+
+    const [newFilterC, setNewFilterC] = useState('')
+    const [newCountry, setNewCountry] = useState('')
 
     const [newFilter, setNewFilter] = useState('')
     const [newName, setNewName] = useState('')
@@ -19,18 +30,57 @@ const App = () => { //props
     //Lisätään komponenttiin lomake uuden muistiinpanon lisäämistä varten
     //addPerson tapahtumankäsittelijä reagoi napin painallukseen
 
+
     useEffect(() => {
         console.log('effect')
         axios
-            .get('https://restcountries.com/v3.1/all')
+            .get('http://localhost:3001/persons')
             .then(response => {
+
                 console.log('promise fulfilled')
                 setNotes(response.data)
+
             })
     }, [])
-    //http://localhost:3001/persons
     console.log('render', notes.length, 'notes')
 
+
+    useEffect(() => {
+        console.log('effect')
+        axios
+            .get('https://restcountries.com/v2/all')
+            .then(response => {
+
+                console.log('promise fulfilled')
+                setNotesC(response.data)
+
+            })
+    }, [countries])
+    console.log('render', notesC.length, 'countries')
+
+
+    useEffect(() => {
+        fetch('https://restcountries.com/v2/all')
+            .then(response => {
+                if (response.ok) {
+                    return response.json()
+                }
+                throw Response
+            })
+            .then(countries => {
+                setCountries(countries)
+                countries.filter(countries => {
+                    return countries.name
+                    
+                })           
+            })
+    }, [])
+
+   
+        
+
+
+    
     /* const xhttp = new XMLHttpRequest()
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
@@ -74,70 +124,116 @@ const App = () => { //props
         setNewNumber('')
         setNewFilter('')
     }
-    /*
-    const addNote = (event) => {
-        event.preventDefault()
-        const noteObject = {
-            content: newNote,
-            date: new Date().toISOString(),
-            important: Math.random() > 0.5,
-            id: persons.length + 1,
-            name: newName
-        }
-        setPersons(persons.concat(noteObject))
-        setNewNote('')
-    } 
-    */
-    // Tapahtumakäsittelijä, kutsutaan kun syötekomponentissa tapahtuu jotain
 
     const handlePersonChange = (event) => {
-        //console.log(event.target.value)
         setNewName(event.target.value)
 
     }
     const handleNumberChange = (event) => {
-        //console.log(event.target.value)
         setNewNumber(event.target.value)
 
     }
     const handleFilterChange = (event) => {
-        //setNewFilter(event.target.value)
-        //  setNewFilter(event.target.value.toLowerCase())
-          let value = event.target.value  //.toLowerCase()
-          let result = []
-          console.log(value)
-           result = persons.filter((persons) => {
-            return persons.name.search(value) != -1
+        let value = event.target.value
+        let result = []
+        
 
+        //console.log(value)
+        result = persons.filter((persons) => {
+            
+
+            return persons.name.search(value) != -1
         })
-        console.log(result)
-        //setNewFilter(result)
-        setNewFilter(event.target.value) //.toLowerCase()
+        
+        //console.log(result)
+
+        setNewFilter(event.target.value)
+
     }
 
-    
-      const results = !newFilter
+    const handleCountryChange = (event) => {
+        event.preventDefault()
+        //setNewCountry(event.target.value)
+
+        let value = event.target.value
+        let maa = []
+
+
+        setNewFilterC('')
+        setNewCountry('')
+        //setNewCountry(event.target.value)
+       // maa = notesC.filter((data) => {
+       //     return data.name.search(value) != -1
+       //     })
+        //console.log(value)
+       // maa = countries.filter((countries) => {
+            
+        //    return countries.name.search(value) != -1
+      //  })
+        setNewFilterC(event.target.value)
+
+
+      //  else if (countries.name >= 10)
+        //      countries.name = fyi
+
+    }
+    /*
+       else
+        maa = countries.filter((countries) => {
+        return countries.name.search(value) != -1
+
+            })
+            newFilterC(fyi)
+            } */
+
+    const results = !newFilter
         ? persons
         : persons.filter(persons =>
 
             persons.name.toLowerCase().includes(newFilter.toLocaleLowerCase())
-            )
-     
-    /* const handleNoteChange = (event) => {
-         //console.log(event.target.value)
-         setNewNote(event.target.value)
-     }*/
-    // Näyttääkö kaikki vai vain tärkeät
+        )
+
+    
+    const maat = !newFilterC
+        ? countries
+        : countries.filter(countries =>
+            countries.name.toLowerCase().includes(newFilterC.toLocaleLowerCase())
+            
+        ) 
+    
+
+    //const number = 10
+    //const fyi = "too many"
+    //if (maat.length > number)
+    //    return notesC.name = fyi
+
+    /*
+      const numero = 10
+      const fyi = "too many"
+        if (maat.length > numero)
+            return countries.name = fyi
+*/
+        //maat.name = fyi
+
+         //countries.name = fyi
+
+
+    //if (countries.length > numero) {
+
+    //    return fyi
+    //}
+        
+    
 
     const personsToShow = showAll
         ? persons
         : persons.filter(person => person.important === true)
 
-    
-   /* const notesToShow = showAll
-        ? persons
-        : persons.filter(person => person.personObject.name === setNewFilter)
-  */  
+
+    /* const notesToShow = showAll
+         ? persons
+         : persons.filter(person => person.personObject.name === setNewFilter)
+   */
     /* tärkeä / kaikki - nappi
      <div>
                 <button onClick={() => setShowAll(!showAll)}>
@@ -170,12 +266,83 @@ const App = () => { //props
                         ))}
                 </ul>
      */
+
+    //var allcountries = countries.length
+    //for (var i = 0; i < allcountries; i--)
+    //    countries[i] = "too many" 
+
     console.log(persons)
+    console.log(countries)
     
+        /*
+     <form onSubmit={addCountry}>
+     </form>
+     */
+
+
+    /* 
+     <div>
+
+                Find countries: <input
+                    value={newFilterC}
+                        onChange={handleCountryChange}
+                />
+                <ul>
+                    {maat.map(country => (
+                        <Country key={country.name} country={country} />
+
+                    ))
+
+                    }
+
+
+                    </ul>
+
+            </div>
+     */
+    var fyi = "Too many matches."
+
+    if (maat.length > 10)
+        return (
+            <div>
+
+                Find countries: <input
+                    value={newFilterC}
+                    onChange={handleCountryChange}
+                />
+                <ul>
+                    {fyi}
+                </ul>
+
+            </div>
+        )
+    else if (maat.length == 1)
+        return (
+            <div>
+                <ul>{ maat.map(country2 => (
+                    <Country2 key={country2.name} country2={country2} />
+                    ))
+                }
+                </ul>
+            </div>
+            )
+    else if (maat.length < 10)
     return (
         <div>
-            <h2>Phonebook</h2>
+            <div>
+                Find countries: <input
+                    value={newFilterC}
+                    onChange={handleCountryChange}
+                    />
+                <ul>{maat.map(country => (
+                    <Country key={country.name} country={country} />
+                ))
+                }
+                </ul>
+            </div>
             
+            <h2>Phonebook</h2>
+
             <div>
                 Filter shown with: <input
                     value={newFilter}
